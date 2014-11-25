@@ -4,11 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Model/ConnectDtbs.java</file>
-            <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Model/NhomNguoiDungMd.java</file>
-            <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Model/PhanQuyenMd.java</file>
-            <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Model/ChucNangMd.java</file>
+            <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Model/NguoiDungMd.java</file>
+            <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Entity/NguoiDung.java</file>
             <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Entity/NhomNguoiDung.java</file>
-            <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/Entity/PhanQuyen.java</file>
+            <file>file:/C:/Users/Ho/Documents/NetBeansProjects/ptpmcn/src/View/Login.java</file>
         </group>
     </open-files>
 </project-private>
