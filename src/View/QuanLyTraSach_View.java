@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bookstoremanagerment.view;
+package View;
 
 /**
  *
  * @author nguyennambk.29
  */
-public class QuanLyTraSach extends java.awt.Frame {
+public class QuanLyTraSach_View extends java.awt.Frame {
 
     /**
      * Creates new form QuanLyTraSach
      */
-    public QuanLyTraSach() {
+    public QuanLyTraSach_View() {
         initComponents();
     }
 
@@ -344,7 +344,7 @@ public class QuanLyTraSach extends java.awt.Frame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyTraSach().setVisible(true);
+                new QuanLyTraSach_View().setVisible(true);
             }
         });
     }

@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bookstoremanagerment.view;
+package View;
 
 /**
  *
  * @author nguyennambk.29
  */
-public class NhomNguoiDung extends java.awt.Frame {
+public class NhomNguoiDung_View extends java.awt.Frame {
 
     /**
      * Creates new form DM_loaisanpham
      */
-    public NhomNguoiDung() {
+    public NhomNguoiDung_View() {
         initComponents();
     }
 
@@ -249,7 +249,7 @@ public class NhomNguoiDung extends java.awt.Frame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NhomNguoiDung().setVisible(true);
+                new NhomNguoiDung_View().setVisible(true);
             }
         });
     }
