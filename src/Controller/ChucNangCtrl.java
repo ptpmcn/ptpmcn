@@ -11,6 +11,9 @@ import Model.ChucNangMd;
 import View.ChucNang_View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -26,15 +29,29 @@ public class ChucNangCtrl implements ActionListener{
         chucnang = new ChucNang();
         chucnangMd = new ChucNangMd();
         chucnang_view = new ChucNang_View();
+        chucnang_view.addChucNang.addActionListener(this);
+        updateTable();
     }
     @Override
     public void actionPerformed(ActionEvent ae) {
        if(ae.getSource() == chucnang_view.addChucNang){
-           //Them Chuc Nang o day
+           addChucNang();
        }
     }
     
-    
+    public void updateTable(){
+        chucnang_view.chucnang_table.setModel(DbUtils.resultSetToTableModel(chucnangMd.getChucNangMd()));
+    }
+    public void addChucNang(){
+        chucnang = new ChucNang();
+        chucnang.setTenChucNang(chucnang_view.tenChucNang_txt.getText());
+        chucnangMd.addChucNang(chucnang);
+        clearText();
+        updateTable();
+    }
+    public void clearText(){
+        chucnang_view.tenChucNang_txt.setText(null);
+    }
     // Cac ham tro giup o day
     
     public static void main(String[] args){

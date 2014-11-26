@@ -17,14 +17,15 @@ import java.util.logging.Logger;
  * @author Hồ Thúc Đồng
  */
 public class ChucNangMd extends ConnectDtbs{
-    public List<ChucNang> getChucNangMd(){
-        List<ChucNang> list = new ArrayList<ChucNang>();
+    public ResultSet getChucNangMd(){
+    //    List<ChucNang> list = new ArrayList<ChucNang>();
         String sql ="Select * From ChucNang";
+        ResultSet rs = null;
         getConnection();
         try {
             Statement stt = connection.createStatement();
-            ResultSet rs = stt.executeQuery(sql);
-            while(rs.next()){
+            rs = stt.executeQuery(sql);
+      /*      while(rs.next()){
                 ChucNang chucnang = new ChucNang();
                 chucnang.setMaChucNang(rs.getInt("MaChucNang"));
                 //System.out.println(""+chucnang.getMaChucNang());
@@ -32,13 +33,14 @@ public class ChucNangMd extends ConnectDtbs{
                 //System.out.println(""+rs.getString("TenChucNang"));
                 list.add(chucnang);
             }
+              */
         } catch (SQLException ex) {
             Logger.getLogger(ChucNangMd.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
             close();
         }
-        return list;
+        return rs;
     }
     public int addChucNang(ChucNang chucNang){
         int flag = 0;
@@ -93,20 +95,5 @@ public class ChucNangMd extends ConnectDtbs{
         return flag;
     }
     // for testing purpose
-    public static void main(String[] args){
-        ChucNangMd cnMd = new ChucNangMd();
-        ChucNang chucnang = new ChucNang();
-        ChucNang chucnang1 = new ChucNang();
-        chucnang1.setMaChucNang(6);
-        chucnang1.setTenChucNang("sua");
-        cnMd.updateChucNang(1, chucnang1);
-        chucnang.setTenChucNang("chilli");
-        cnMd.deleteChucNang(6);
-        System.out.println(""+cnMd.addChucNang(chucnang));
-        List<ChucNang> l = new ArrayList<ChucNang>();
-        l = cnMd.getChucNangMd();
-        for(ChucNang cn: l){
-            System.out.println(""+ cn.getTenChucNang()+" "+cn.getMaChucNang());
-        }
-    }
+   
 }
