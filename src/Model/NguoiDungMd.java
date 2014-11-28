@@ -19,15 +19,15 @@ import java.util.logging.Logger;
  * @author Hồ Thúc Đồng
  */
 public class NguoiDungMd extends ConnectDtbs{
-    public List<NguoiDung> getNguoiDung(){
-        List<NguoiDung> list = new ArrayList<NguoiDung>();
-        String sql = "Select * From NguoiDung";
+    public ResultSet getNguoiDung(){
+        //List<NguoiDung> list = new ArrayList<NguoiDung>();
+        String sql = "Select nd.MaNguoiDung,nd.TenNguoiDung,nd.TaiKhoan,nND.TenNhomNguoiDung From NguoiDung as nd,NhomNguoiDung as nND Where nd.MaNhomNguoiDung = nND.MaNhomNguoiDung";
         getConnection();
         Statement stmt;
         try {
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
+        /*    while(rs.next()){
                 NguoiDung nd = new NguoiDung();
                 nd.setMaND(rs.getInt("MaNguoiDung"));
                 nd.setMaNhomND(rs.getInt("MaNhomNguoiDung"));
@@ -37,14 +37,17 @@ public class NguoiDungMd extends ConnectDtbs{
                 nd.setTrangthai(rs.getInt("TrangThai"));
                 list.add(nd);
             }
+            */
+            return rs;
         } catch (SQLException ex) {
             Logger.getLogger(NguoiDungMd.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
             close();
         }
-        return list;
+        return null;
     }
+    
     
     public int addNguoiDung(NguoiDung nd){
         int flag = 0;
@@ -108,8 +111,30 @@ public class NguoiDungMd extends ConnectDtbs{
         }
         return flag;
     }
+    
+    public NguoiDung getNguoiDung(String maND){
+        String sql = "Select * From NguoiDung Where MaNguoiDung = "+maND;
+        getConnection();
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                NguoiDung nd = new NguoiDung();
+                nd.setMaND(rs.getInt("MaNguoiDung"));
+                nd.setMaNhomND(rs.getInt("MaNhomNguoiDung"));
+                nd.setMatkhau(rs.getString("MatKhau"));
+                nd.setTaikhoan(rs.getString("TaiKhoan"));
+                nd.setTenND(rs.getString("TenNguoiDung"));
+                
+                return nd;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NguoiDungMd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     public static void main(String[] args){
-        NguoiDungMd ndMd = new NguoiDungMd();
+     /*   NguoiDungMd ndMd = new NguoiDungMd();
         NguoiDung n = new NguoiDung();
         n.setMaND(3);
         n.setMaNhomND(1);
@@ -122,5 +147,6 @@ public class NguoiDungMd extends ConnectDtbs{
         for(NguoiDung nd : ndMd.getNguoiDung()){
             System.out.println(""+nd.getMaND()+" "+nd.getMaNhomND()+" "+nd.getTaikhoan()+" "+nd.getMatkhau()+" "+nd.getTenND()+" "+nd.getTrangthai());
         }
+             */
     }
 }

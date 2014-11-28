@@ -20,20 +20,22 @@ import java.sql.PreparedStatement;
  * @author Hồ Thúc Đồng
  */
 public class NhomNguoiDungMd extends ConnectDtbs {
-    public List<NhomNguoiDung> getNhomND(){
-        List<NhomNguoiDung> list = new ArrayList<NhomNguoiDung>();
+    public ResultSet getNhomND(){
+        //List<NhomNguoiDung> list = new ArrayList<NhomNguoiDung>();
         String sql = "Select * From NhomNguoiDung";
+        ResultSet rs = null;
         getConnection();
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
+            rs = stmt.executeQuery(sql);
+          /*  while(rs.next()){
                 NhomNguoiDung nhomND = new NhomNguoiDung();
                 nhomND.setMaNhom(rs.getInt("MaNhomNguoiDung"));
                 nhomND.setTenNhom(rs.getString("TenNhomNguoiDung"));
                 nhomND.setGhiChu(rs.getString("GhiChu"));
                 list.add(nhomND);
             }
+                  */
         } catch (SQLException ex) {
             Logger.getLogger(NhomNguoiDungMd.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,17 +43,46 @@ public class NhomNguoiDungMd extends ConnectDtbs {
             close();
         }
         
-        return list;
+        return rs;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List <NhomNguoiDung> getListNhomND(){
+        List<NhomNguoiDung> list = new ArrayList<NhomNguoiDung>();
+        String sql = "Select * From NhomNguoiDung";
+        ResultSet rs = null;
+        getConnection();
+        try {
+            Statement stmt = connection.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                NhomNguoiDung nhomND = new NhomNguoiDung();
+                nhomND.setMaNhom(rs.getInt("MaNhomNguoiDung"));
+                nhomND.setTenNhom(rs.getString("TenNhomNguoiDung"));
+                nhomND.setGhiChu(rs.getString("GhiChu"));
+                list.add(nhomND);
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(NhomNguoiDungMd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            close();
+        }
+        
+        return null;
     }
     public int addNhomND(NhomNguoiDung nND){
         int flag = 0;
-        String sql = "Insert Into NhomNguoiDung Values (?,?,?)";
+        String sql = "Insert Into NhomNguoiDung Values (?,?)";
         getConnection();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, nND.getMaNhom());
-            stmt.setString(2, nND.getTenNhom());
-            stmt.setString(3, nND.getGhiChu());
+            stmt.setString(1, nND.getTenNhom());
+            stmt.setString(2, nND.getGhiChu());
             flag = stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NhomNguoiDungMd.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,13 +92,13 @@ public class NhomNguoiDungMd extends ConnectDtbs {
     
     public int updateNhomND(NhomNguoiDung nND){
         int flag = 0 ;
-        String sql = "Update NhomNguoiDung Set MaNhomNguoiDung = ?, TenNhomNguoiDung = ?, GhiChu = ? ";
+        String sql = "Update NhomNguoiDung Set TenNhomNguoiDung = ?, GhiChu = ? Where MaNhomNguoiDung = ?";
         getConnection();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, nND.getMaNhom());
-            stmt.setString(2, nND.getTenNhom());
-            stmt.setString(3, nND.getGhiChu());
+            stmt.setInt(3, nND.getMaNhom());
+            stmt.setString(1, nND.getTenNhom());
+            stmt.setString(2, nND.getGhiChu());
             flag = stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NhomNguoiDungMd.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,6 +109,28 @@ public class NhomNguoiDungMd extends ConnectDtbs {
         return flag;
     }
     
+    public NhomNguoiDung getNhomND(String id){
+        NhomNguoiDung nND = new NhomNguoiDung();
+        String sql = "Select * From NhomNguoiDung Where MaNhomNguoiDung = "+id+";";
+        getConnection();
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                nND.setMaNhom(rs.getInt("MaNhomNguoiDung"));
+                nND.setTenNhom(rs.getString("TenNhomNguoiDung"));
+                nND.setGhiChu(rs.getString("GhiChu"));
+                return nND;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NhomNguoiDungMd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            close();
+        }
+        return null;
+    }
     public int deleteNhomND(int id){
         int flag = 0;
         String sql = "Delete From NhomNguoiDung Where MaNhomNguoiDung = ?";
@@ -97,16 +150,13 @@ public class NhomNguoiDungMd extends ConnectDtbs {
         return flag;
     }
     
-    public static void main(String[] args){
-        NhomNguoiDungMd nND = new NhomNguoiDungMd();
-        NhomNguoiDung nd = new NhomNguoiDung();
-        nd.setMaNhom(1);
-        nd.setGhiChu("xxxTest");
-        nd.setTenNhom("xxxTest");
-        nND.updateNhomND(nd);
-        List<NhomNguoiDung> list = nND.getNhomND();
-        for(NhomNguoiDung n: list){
-            System.out.println(""+n.getTenNhom()+" "+n.getGhiChu()+" "+n.getMaNhom());
-        }
-    }
+   public static void main(String[] args){
+       NhomNguoiDungMd t = new NhomNguoiDungMd();
+       List<NhomNguoiDung> nND = t.getListNhomND();
+       for(NhomNguoiDung n : nND){
+           System.out.println(""+n.getTenNhom()+" "+n.getGhiChu()+" "+n.getMaNhom());
+       }
+      
+       
+   }
 }
